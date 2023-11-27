@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/estilos.css">
+    <script src="../controllers/menuController.js"></script>
+    <script src="../controllers/listadoController.js"></script>
+    <script src="../model/sujeto.js"></script>
+    <script src="../controllers/formController.js"></script>
+    <title>Upload</title>
+</head>
+<body>
+
+    <!-- Menú para agregar nuevos sujetos y ocultar/mostrar información -->
+    <div id="menu">
+        <button id="btnAgregar">Agregar Nuevo Sujeto</button>
+        <button id="btnDesaparecer">Ocultar</button>
+    </div>
+
+    <div id="imagenOcultar" style="display: none;">
+        
+    </div>
+
+    <!-- Listado de sujetos -->
+    <div id="listado" style="display: block;">
+    </div>
+
+    <!-- Formulario para agregar/modificar sujetos -->
+    <div id="formulario" style="display: none;">
+        <form id="sujetoForm">
+            <h2>Formulario de Sujeto</h2>
+    
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+    
+            <label for="tipo">Tipo (Cargado o Vivo):</label>
+            <select id="tipo" name="tipo" required>
+                <option value="" selected disabled>Seleccione tipo</option>
+                <option value="cargado">Cargado</option>
+                <option value="vivo">Vivo</option>
+            </select>
+    
+            <label for="residencia">Donde vive:</label>
+            <input type="text" id="residencia" name="residencia" required>
+    
+            <label id="labelTiempo" for="tiempoDescargado">Desde cuando fue descargado:</label>
+            <input type="date" id="tiempoDescargado" name="tiempoDescargado" placeholder="Solo para descargados">
+    
+            <label for="culpabilidad">Posible culpabilidad:</label>
+            <select id="culpabilidad" name="culpabilidad" required>
+                <option value="" selected disabled>Seleccione culpabilidad</option>
+                <option value="posibleCooperador">Posible Cooperador</option>
+                <option value="cooperador">Cooperador</option>
+                <option value="delincuente">Delincuente</option>
+            </select>
+    
+            <label for="imagen">URL de la imagen del sujeto:</label>
+            <input type="text" id="imagen" name="imagen" placeholder="Ejemplo: https://example.com/imagen.jpg">
+    
+            <label for="comentarios">Comentarios:</label>
+            <textarea id="comentarios" name="comentarios" rows="4"></textarea>
+    
+            <button type="button" onclick="validarFormulario()">Guardar</button>
+            <br>
+            <br>
+            <button type="button" onclick="cerrarFormulario()">Cancelar</button>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -105,7 +105,11 @@ function editarSujeto(sujeto) {
         sujetosGuardados[indiceSujeto].nombre = nombre.value;
         sujetosGuardados[indiceSujeto].tipo = tipo.value;
         sujetosGuardados[indiceSujeto].residencia = residencia.value;
-        sujetosGuardados[indiceSujeto].tiempoDescargado = tiempoDescargado.value;
+        if(tipo.value == "vivo"){
+            sujetosGuardados[indiceSujeto].tiempoDescargado = "";
+        } else{
+            sujetosGuardados[indiceSujeto].tiempoDescargado = tiempoDescargado.value;
+        }
         sujetosGuardados[indiceSujeto].culpabilidad = culpabilidad.value;
         sujetosGuardados[indiceSujeto].imagen = imagen.value;
         sujetosGuardados[indiceSujeto].comentarios = comentarios.value;

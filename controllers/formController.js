@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var residencia = document.getElementById("residencia");
     var labelTiempoDescargado = document.getElementById("labelTiempo");
     var tiempoDescargado = document.getElementById("tiempoDescargado");
+    tiempoDescargado.setAttribute('max', new Date().toISOString().split('T')[0]);
     var culpabilidad = document.getElementById("culpabilidad");
     var imagen = document.getElementById("imagen");
     var comentarios = document.getElementById("comentarios");
@@ -59,6 +60,7 @@ function cerrarFormulario(){
 
 // Metodo para añadir el nuevo sujeto al localStorage o editar los datos del sujeto existente
 function guardarEnLocalStorage(sujeto) {
+    var agregando = localStorage.getItem("agregando");
     // Obtener la lista actual de sujetos desde localStorage (si existe)
     var sujetosGuardados = JSON.parse(localStorage.getItem("sujetos")) || [];
     var sujetoExistente = false;
@@ -71,7 +73,7 @@ function guardarEnLocalStorage(sujeto) {
         }
     });
 
-    if(sujetoExistente == false){
+    if(sujetoExistente == false && agregando == "true"){
         // Agregar el nuevo sujeto a la lista
         sujetosGuardados.push(sujeto);
 
@@ -93,33 +95,39 @@ function guardarEnLocalStorage(sujeto) {
 
 // Metodo para editar el sujeto existente
 function editarSujeto(sujeto) {
-    var sujetosGuardados = JSON.parse(localStorage.getItem("sujetos")) || [];
+    var agregando = localStorage.getItem("agregando");
+    
+    if(agregando === "true"){
+    } else{
+        var sujetosGuardados = JSON.parse(localStorage.getItem("sujetos")) || [];
 
-    // Obteter el indice en el array del sujeto a editar
-    var indiceSujeto = sujetosGuardados.findIndex(function (item) {
-        return item.nombre === sujeto.nombre;
-    });
-
-    if (indiceSujeto !== -1) {
-        // Actualizar los datos del sujeto
-        sujetosGuardados[indiceSujeto].nombre = nombre.value;
-        sujetosGuardados[indiceSujeto].tipo = tipo.value;
-        sujetosGuardados[indiceSujeto].residencia = residencia.value;
-        if(tipo.value == "vivo"){
-            sujetosGuardados[indiceSujeto].tiempoDescargado = "";
-        } else{
-            sujetosGuardados[indiceSujeto].tiempoDescargado = tiempoDescargado.value;
+        // Obteter el indice en el array del sujeto a editar
+        var indiceSujeto = sujetosGuardados.findIndex(function (item) {
+            return item.nombre === sujeto.nombre;
+        });
+    
+        if (indiceSujeto !== -1) {
+            // Actualizar los datos del sujeto
+            sujetosGuardados[indiceSujeto].nombre = nombre.value;
+            sujetosGuardados[indiceSujeto].tipo = tipo.value;
+            sujetosGuardados[indiceSujeto].residencia = residencia.value;
+            if(tipo.value == "vivo"){
+                sujetosGuardados[indiceSujeto].tiempoDescargado = "";
+            } else{
+                sujetosGuardados[indiceSujeto].tiempoDescargado = tiempoDescargado.value;
+            }
+            sujetosGuardados[indiceSujeto].culpabilidad = culpabilidad.value;
+            sujetosGuardados[indiceSujeto].imagen = imagen.value;
+            sujetosGuardados[indiceSujeto].comentarios = comentarios.value;
+    
+            // Guardar el array actualizado en localStorage
+            localStorage.setItem("sujetos", JSON.stringify(sujetosGuardados));
+    
+            alert("Sujeto editado correctamente");
+        } else {
+            alert("No se encontró el sujeto con el nombre proporcionado.");
         }
-        sujetosGuardados[indiceSujeto].culpabilidad = culpabilidad.value;
-        sujetosGuardados[indiceSujeto].imagen = imagen.value;
-        sujetosGuardados[indiceSujeto].comentarios = comentarios.value;
-
-        // Guardar el array actualizado en localStorage
-        localStorage.setItem("sujetos", JSON.stringify(sujetosGuardados));
-
-        alert("Sujeto editado correctamente");
-    } else {
-        alert("No se encontró el sujeto con el nombre proporcionado.");
+        btnAgregar.disabled = false;
     }
-    btnAgregar.disabled = false;
+    
 }

@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Metodo para ir cambiando entre la vista del formulario y el listado
     function mostrarFormulario() {
+        localStorage.setItem("agregando", true);
         if(imagen.style.display === "block"){
             imagen.style.display = "none";
             formulario.style.display = "block";

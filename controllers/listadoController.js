@@ -59,6 +59,8 @@ function cargarListado() {
         sujetoElement.addEventListener("click", function(){
             listado.style.display = "none";
             formulario.style.display = "block";
+
+            localStorage.setItem("agregando", false);
             
             mostrarDatosEnFormulario(sujeto);
         });
